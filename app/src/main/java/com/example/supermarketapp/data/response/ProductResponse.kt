@@ -17,9 +17,9 @@ data class ProductResponse(
     fun toDomain():Product{
         return Product(
             id = id,
-            title = name,
+            name = name,
             description = description,
-            imageUrl = image,
+            image = image,
             price = price
         )
     }

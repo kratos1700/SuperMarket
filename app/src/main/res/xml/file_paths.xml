@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Este archivo se utiliza para definir los directorios de almacenamiento de archivos que se pueden compartir con otras aplicaciones.-->
+<Paths>
+    <external-cache-path
+        name="my_images"
+        path="/" />
+
+</Paths>

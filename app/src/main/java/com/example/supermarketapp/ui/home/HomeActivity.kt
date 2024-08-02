@@ -14,11 +14,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.supermarketapp.R
 import com.example.supermarketapp.databinding.ActivityHomeBinding
 import com.example.supermarketapp.domain.model.Product
 import com.example.supermarketapp.ui.addproduct.AddProductActivity
+import com.example.supermarketapp.ui.home.adapter.ProductsAdapter
+import com.example.supermarketapp.ui.home.adapter.SpacingDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -30,6 +33,8 @@ class HomeActivity : AppCompatActivity() {
 
     // private val viewModel: HomeViewModel by viewModels()  // no serveix per cargar dades si tenim un init al viewmodel ja que es un delegat
     private lateinit var homeViewModel: HomeViewModel
+
+    private lateinit var productsAdapter: ProductsAdapter
 
 
     private val addProductLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -58,6 +63,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initUI() {
         initListeners()
+        initList()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
 
@@ -74,6 +80,15 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    private fun initList() {
+        productsAdapter = ProductsAdapter()
+        binding.rvProducts.apply {
+            layoutManager = GridLayoutManager(this@HomeActivity, 2)
+            addItemDecoration(SpacingDecorator(16))
+            adapter = productsAdapter
+        }
+    }
+
     private fun initListeners() {
 
         binding.viewToolbar.tvAddProduct.setOnClickListener {
@@ -86,6 +101,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun renderProducts(products: List<Product>) {
 
+        productsAdapter.updateList(products)
+
+
+
     }
 
     private fun renderTopProducts(topProducts: List<Product>) {
@@ -96,9 +115,9 @@ class HomeActivity : AppCompatActivity() {
 
         if (lastProduct == null) return  // si no hi ha cap product no fem res
 
-        binding.viewLastProduct.tvTitle.text = lastProduct.title
+        binding.viewLastProduct.tvTitle.text = lastProduct.name
         binding.viewLastProduct.tvDescription.text = lastProduct.description
-        Glide.with(this).load(lastProduct.imageUrl)
+        Glide.with(this).load(lastProduct.image)
             .placeholder(R.drawable.ic_shop)
             .into(binding.viewLastProduct.ivLastProduct)
         binding.viewLastProduct.root.isVisible = true

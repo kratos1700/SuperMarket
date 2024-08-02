@@ -15,17 +15,27 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(val repository : FirebaseDatabaseService) :ViewModel() {
+class HomeViewModel @Inject constructor(val repository: FirebaseDatabaseService) : ViewModel() {
 
-    private var _uiState:MutableStateFlow<HomeUIState> = MutableStateFlow(HomeUIState())
-    val uiState : StateFlow<HomeUIState> = _uiState
+    private var _uiState: MutableStateFlow<HomeUIState> = MutableStateFlow(HomeUIState())
+    val uiState: StateFlow<HomeUIState> = _uiState
 
     init {
         getData()
     }
 
- fun getData() {
+    fun getData() {
         getLastProduct()
+        getAllProducts()
+    }
+
+    private fun getAllProducts() {
+        viewModelScope.launch {
+            val response = withContext(Dispatchers.IO) {
+                repository.getAllProducts()
+            }
+            _uiState.update { it.copy(products = response) }  // actualiza el estado de la UI
+        }
     }
 
     private fun getLastProduct() {
@@ -33,18 +43,15 @@ class HomeViewModel @Inject constructor(val repository : FirebaseDatabaseService
             val response = withContext(Dispatchers.IO) {
                 repository.getLastProducts()
             }
-        //    _uiState.value = _uiState.value.copy(lastProduct = response)  // actualiza el estado de la UI
+            //    _uiState.value = _uiState.value.copy(lastProduct = response)  // actualiza el estado de la UI
 
             _uiState.update { it.copy(lastProduct = response) }  // actualiza el estado de la UI
-            Log.i("HomeViewModel", "getLastProduct: ${response}")
+            Log.i("HomeViewModel", "getLastProduct: $response")
         }
     }
 
 
-
-
 }
-
 
 
 data class HomeUIState(
