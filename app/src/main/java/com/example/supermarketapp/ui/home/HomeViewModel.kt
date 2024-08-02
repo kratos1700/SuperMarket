@@ -1,17 +1,46 @@
 package com.example.supermarketapp.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.supermarketapp.data.network.FirebaseDatabaseService
 import com.example.supermarketapp.domain.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() :ViewModel() {
+class HomeViewModel @Inject constructor(val repository : FirebaseDatabaseService) :ViewModel() {
 
     private var _uiState:MutableStateFlow<HomeUIState> = MutableStateFlow(HomeUIState())
     val uiState : StateFlow<HomeUIState> = _uiState
+
+    init {
+        getData()
+    }
+
+ fun getData() {
+        getLastProduct()
+    }
+
+    private fun getLastProduct() {
+        viewModelScope.launch {
+            val response = withContext(Dispatchers.IO) {
+                repository.getLastProducts()
+            }
+        //    _uiState.value = _uiState.value.copy(lastProduct = response)  // actualiza el estado de la UI
+
+            _uiState.update { it.copy(lastProduct = response) }  // actualiza el estado de la UI
+            Log.i("HomeViewModel", "getLastProduct: ${response}")
+        }
+    }
+
+
 
 
 }

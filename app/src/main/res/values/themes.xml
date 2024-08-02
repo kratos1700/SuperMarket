@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.SupermarketApp" parent="Base.Theme.SupermarketApp" />
+    
+    <style name="ETForm" >
+        <item name="android:layout_marginHorizontal">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/bg_form</item>
+    </style>
 </resources>

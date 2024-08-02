@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">SupermarketApp</string>
+    <string name="home">Home</string>
+    <string name="add_product">Add Product</string>
+    <string name="imagen_del_producto">imagen del producto</string>
+    <string name="last_products">Last Products</string>
+    <string name="products">Products</string>
+    <string name="add_product1">Add Product</string>
+    <string name="name">Name</string>
+    <string name="product_name">Product name</string>
+    <string name="description">Description</string>
+    <string name="product_description">Product Description</string>
+    <string name="product_price">Product Price</string>
+    <string name="price">Price</string>
+    <string name="product_image">Product Image</string>
+    <string name="image">Image</string>
 </resources>
