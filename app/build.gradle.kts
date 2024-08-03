@@ -58,6 +58,7 @@ dependencies {
 
     //Dagger Hilt
     implementation(libs.com.google.dagger)
+    implementation(libs.firebase.config)
     kapt(libs.com.google.dagger.compiler)
     implementation(libs.com.google.dagger.navigation)
 

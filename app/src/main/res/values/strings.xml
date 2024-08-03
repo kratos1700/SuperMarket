@@ -14,4 +14,5 @@
     <string name="price">Price</string>
     <string name="product_image">Product Image</string>
     <string name="image">Image</string>
+    <string name="remote_config">Remote Config</string>
 </resources>

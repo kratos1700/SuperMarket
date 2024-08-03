@@ -20,6 +20,14 @@
         android:paddingEnd="16dp"
         android:text="@string/add_product"
         android:textColor="@color/white" />
+    <TextView
+        android:id="@+id/tvRemoteConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center"
+        android:paddingEnd="16dp"
+        android:text="@string/remote_config"
+        android:textColor="@color/white" />
 
 </FrameLayout>
 

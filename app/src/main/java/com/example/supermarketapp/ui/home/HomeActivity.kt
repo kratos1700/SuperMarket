@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.supermarketapp.R
 import com.example.supermarketapp.databinding.ActivityHomeBinding
 import com.example.supermarketapp.domain.model.Product
+import com.example.supermarketapp.remoteconfig.ui.RemoteConfigActivity
 import com.example.supermarketapp.ui.addproduct.AddProductActivity
 import com.example.supermarketapp.ui.home.adapter.ProductsAdapter
 import com.example.supermarketapp.ui.home.adapter.SpacingDecorator
@@ -113,6 +114,15 @@ class HomeActivity : AppCompatActivity() {
 
 
         }
+
+        binding.viewToolbar.tvRemoteConfig.setOnClickListener {
+
+
+            startActivity(RemoteConfigActivity.create(this))  // aixi cridem aquesta activity desde qualsevol altre activity
+
+
+        }
+
     }
 
     private fun renderProducts(products: List<Product>) {
