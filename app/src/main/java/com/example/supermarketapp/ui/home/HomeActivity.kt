@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.supermarketapp.R
 import com.example.supermarketapp.databinding.ActivityHomeBinding
@@ -22,6 +23,7 @@ import com.example.supermarketapp.domain.model.Product
 import com.example.supermarketapp.ui.addproduct.AddProductActivity
 import com.example.supermarketapp.ui.home.adapter.ProductsAdapter
 import com.example.supermarketapp.ui.home.adapter.SpacingDecorator
+import com.example.supermarketapp.ui.home.adapter.TopProductsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -35,6 +37,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var productsAdapter: ProductsAdapter
+    private lateinit var topProductsAdapter: TopProductsAdapter
 
 
     private val addProductLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -62,6 +65,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
+        initShimmers()
         initListeners()
         initList()
         lifecycleScope.launch {
@@ -80,12 +84,24 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    private fun initShimmers() {
+        binding.viewLastProductShimmer.root.startShimmer()
+        binding.shimmerTopProduct.startShimmer()
+    }
+
     private fun initList() {
         productsAdapter = ProductsAdapter()
         binding.rvProducts.apply {
             layoutManager = GridLayoutManager(this@HomeActivity, 2)
             addItemDecoration(SpacingDecorator(16))
             adapter = productsAdapter
+        }
+
+        topProductsAdapter = TopProductsAdapter()
+        binding.rvTopProducts.apply {
+            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+           // addItemDecoration(SpacingDecorator(16))
+            adapter = topProductsAdapter
         }
     }
 
@@ -101,13 +117,18 @@ class HomeActivity : AppCompatActivity() {
 
     private fun renderProducts(products: List<Product>) {
 
-        productsAdapter.updateList(products)
+        productsAdapter.updateList(products) // actualitza la llista de products
 
 
 
     }
 
     private fun renderTopProducts(topProducts: List<Product>) {
+        if (topProducts.isEmpty()) return // si no hi ha cap producte no fem res
+
+        topProductsAdapter.updateList(topProducts) // actualitza la llista de top products
+        binding.shimmerTopProduct.isVisible = false
+        binding.shimmerTopProduct.stopShimmer()
 
     }
 
@@ -120,7 +141,10 @@ class HomeActivity : AppCompatActivity() {
         Glide.with(this).load(lastProduct.image)
             .placeholder(R.drawable.ic_shop)
             .into(binding.viewLastProduct.ivLastProduct)
+
         binding.viewLastProduct.root.isVisible = true
+
+        binding.viewLastProductShimmer.root.stopShimmer()
 
 
     }

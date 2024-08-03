@@ -63,7 +63,7 @@ dependencies {
 
 
     //Glide
-    implementation (libs.glide)
+    implementation(libs.glide)
 
     //Firebase
     implementation(platform(libs.firebase.bom))
@@ -72,7 +72,8 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
 
-
+    //shimer
+    implementation(libs.shimmer)
 
 
 

@@ -26,7 +26,7 @@ class FirebaseDatabaseService @Inject constructor(
     companion object {
         const val PRODUCTS_PATH = "products"
         const val MANAGEMENT_PATH = "management"
-        const val TOP_PRODUCT_DOCUMENT = "topProducts"
+        const val TOP_PRODUCT_DOCUMENT = "top_products"
         const val ID_PATH = "id"
     }
 
@@ -54,8 +54,9 @@ class FirebaseDatabaseService @Inject constructor(
     // esta funcion obtiene los productos mas vendidos de la base de datos de Firebase
     suspend fun getTopProducts(): List<String> {
         return firestore.collection(MANAGEMENT_PATH).document(TOP_PRODUCT_DOCUMENT).get().await()
-            .toObject(TopProductsResponse::class.java)?.ids
-            ?: emptyList()  // retorna una lista de los productos mas vendidos de la base de datos de Firebase o una lista vacia
+            .toObject(TopProductsResponse::class.java)?.ids ?: emptyList() // retorna una lista de los productos mas vendidos de la base de datos de Firebase o una lista vacia
+
+
 
     }
 

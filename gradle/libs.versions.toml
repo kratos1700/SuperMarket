@@ -27,6 +27,7 @@ firebaseAnalytics = "22.0.2"
 firebaseFirestore = "25.0.0"
 firebaseCrashlytics = "19.0.3"
 googleFirebaseCrashlytics = "3.0.2"
+shimmer = "0.5.0"
 
 
 [libraries]
@@ -56,6 +57,7 @@ com-google-dagger-navigation = { group = "androidx.hilt", name = "hilt-navigatio
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
